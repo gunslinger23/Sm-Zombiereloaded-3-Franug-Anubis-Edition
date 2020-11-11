@@ -423,7 +423,7 @@ InfectOnRoundFreezeEnd()
 /**
  * The round is ending.
  */
-InfectOnRoundEnd()
+public Action:InfectOnRoundEnd(Handle:hTimer)
 {
 	// Stop infect timers if running.
 	ZREndTimer(tInfect);

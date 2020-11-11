@@ -472,19 +472,6 @@ ClassOnClientInfected(client, bool:motherzombie = false) //responsavel pela troc
 	
 	// Apply the new attributes.
 	ClassApplyAttributes(client, motherzombie); // Aplica a Classe
-	
-	CreateTimer(0.5, Timer_SetDefaultClass, client, TIMER_FLAG_NO_MAPCHANGE);
-	
-}
-
-public Action:Timer_SetDefaultClass(Handle:timer, any:client)
-{
-	new vida = GetClientHealth(client);
-	if(vida < 300)
-	{
-		ClassOnClientInfected(client);
-		PrintToChat(client, "[ZR] Error,, Class Reload!");
-	}
 }
 
 /**

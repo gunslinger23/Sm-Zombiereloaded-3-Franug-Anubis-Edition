@@ -147,12 +147,13 @@ public Action:EventRoundEnd(Handle:event, const String:name[], bool:dontBroadcas
 	// Forward event to modules.
 	WeaponsOnRoundEnd();
 	RoundEndOnRoundEnd(winner);
-	InfectOnRoundEnd();
+	//InfectOnRoundEnd();
 	SEffectsOnRoundEnd();
 	RespawnOnRoundEnd();
 	ZSpawnOnRoundEnd();
 	VolOnRoundEnd();
 	ImmunityOnRoundEnd();
+	CreateTimer(1.0, InfectOnRoundEnd, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
 /**
