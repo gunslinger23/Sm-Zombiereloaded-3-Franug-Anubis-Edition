@@ -35,3 +35,4 @@ Sorry for my English.
 "zr_forceteams",		"0",			"Forces teams to switch to Humans at the start of the Match."
 
 #I accept suggestions and modifications to improve the code, I am new to programming and I want to help and learn more.
+![alt text](https://i.ibb.co/fSYqhHT/20201113222029-1.jpg)
