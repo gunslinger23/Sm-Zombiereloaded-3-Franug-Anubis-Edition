@@ -1335,4 +1335,9 @@
 	{
 		"en" 		"[Zr] RoundEnd Sounds Disable."
 	}
+
+	"Repeat killer detected"
+	{
+		"en" 		"Repeat killer detected. Disabling respawn for this round."
+	}
 }

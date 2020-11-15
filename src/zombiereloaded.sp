@@ -347,6 +347,7 @@ public OnClientDisconnect(client)
 	DamageOnClientDisconnect(client);
 	AntiStickOnClientDisconnect(client);
 	ZSpawnOnClientDisconnect(client);
+	RespawnOnClientDisconnect(client);
 	VolOnPlayerDisconnect(client);
 	ImmunityOnClientDisconnect(client);
 }

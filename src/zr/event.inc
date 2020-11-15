@@ -93,6 +93,7 @@ public Action:EventRoundStart(Handle:event, const String:name[], bool:dontBroadc
 	OverlaysOnRoundStart();
 	RoundStartOnRoundStart();
 	RoundEndOnRoundStart();
+	RespawnOnRoundStart();
 	InfectOnRoundStart();
 	SEffectsOnRoundStart();
 	ZSpawnOnRoundStart();

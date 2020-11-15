@@ -47,6 +47,12 @@ new Handle:tRespawn[MAXPLAYERS + 1];
 new bool:bKilledByWorld[MAXPLAYERS + 1];
 
 /**
+ * Array to signal whether the player will respawn or not.
+ */
+new bool:g_bBlockRespawn = false;
+new Float:g_fDeathTime[MAXPLAYERS+1];
+
+/**
  * Client is joining the server.
  */ 
 RespawnClientInit(client)
@@ -73,6 +79,16 @@ RespawnOnClientSpawn(client)
 	
 	// Reset timer handle.
 	tRespawn[client] = INVALID_HANDLE;
+}
+
+RespawnOnRoundStart()
+{
+	g_bBlockRespawn = false;
+}
+
+RespawnOnClientDisconnect(client)
+{
+	g_fDeathTime[client] = 0.0;
 }
 
 /**
@@ -107,12 +123,42 @@ RespawnOnClientDeath(client, attacker, const String:weapon[])
 	{
 		return;
 	}
+	// If repeatkill is disabled, stop here.
+	new bool:repeatkill = GetConVarBool(g_hCvarsList[CVAR_RESPEATKILL]);
 	
 	// Start respawn timer.
 	new Float:delay = GetConVarFloat(g_hCvarsList[CVAR_RESPAWN_DELAY]);
-	tRespawn[client] = CreateTimer(delay, RespawnTimer, client, TIMER_FLAG_NO_MAPCHANGE);
-}
+	
+	// Start repeatkill timer.
+	new Float:repeatkilltime = GetConVarFloat(g_hCvarsList[CVAR_RESPEATKILL_TIME]);
 
+	// Disabled respawn Repeatkill.	
+	if (g_bBlockRespawn)
+		return;
+
+	// If repeatkill is enabled.	
+	if (repeatkill)
+	{
+		if (client && !attacker && StrEqual(weapon, "trigger_hurt"))
+		{
+			new Float:fGameTime = GetGameTime();
+		
+			if (fGameTime - g_fDeathTime[client] - delay < repeatkilltime)
+			{
+				TranslationPrintToChatAll(true, false, "Repeat killer detected");
+				g_bBlockRespawn = true;
+			}
+		
+			g_fDeathTime[client] = fGameTime;
+		}
+	}
+
+	// Respawn.
+	if (!g_bBlockRespawn)
+	{
+		tRespawn[client] = CreateTimer(delay, RespawnTimer, client, TIMER_FLAG_NO_MAPCHANGE);
+	}
+}
 /**
  * The round is ending.
  */
