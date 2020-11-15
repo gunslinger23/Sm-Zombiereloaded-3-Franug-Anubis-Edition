@@ -191,7 +191,6 @@ bool:ClassApplyModel(client, classindex, cachetype = ZR_CLASS_CACHE_PLAYER)
 	
 	SetEntityModel(client, modelpath);
 	SetEntProp(client, Prop_Send, "m_nSkin", skinIndex);
-	//PrintToChat(client, "%s", modelpath);
 	
 	return true;
 }
@@ -479,6 +478,21 @@ public ClassPreThinkPost(client)
 	}
 }
 
+public ClassApplyNoarmorZombie(client)
+{
+	// If Noarmor is disabled, stop here.
+	new bool:zrnoarmor = GetConVarBool(g_hCvarsList[CVAR_INFECT_NOARMOR_ZOMBIE]);
+
+	// If Noarmor is enabled.	
+	if (zrnoarmor)
+	{
+		if (IsPlayerAlive(client))
+		{
+			SetEntProp( client, Prop_Send, "m_ArmorValue", 0, 1 );
+		}
+	}
+}
+
 /**
  * Called when a clients movement buttons are being processed
  *
@@ -529,11 +543,7 @@ bool:ClassApplyArms(client, classindex, cachetype = ZR_CLASS_CACHE_PLAYER)
 	{
 		ClassGetArmsPath(classindex, arms_path, sizeof(arms_path), cachetype);
 	}
-	
-	//PrecacheModel(arms_path);
-	//PrecacheModel("models/player/colateam/zombie1/arms.mdl");
-	//PrecacheModel("models/player/custom_player/infused/halo4/mchief/mchief_arms.mdl");
-	//PrintToChat(client, "%s", arms_path);
+
 	SetEntPropString(client, Prop_Send, "m_szArmsModel", arms_path);
 	
 	return true;

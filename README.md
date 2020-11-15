@@ -36,9 +36,13 @@ Sorry for my English.
 
 #This native will detect infinite loops where the map kills a player.
 
-"zr_respeatkill",		"1",			"Repeat kill map triger."
+"zr_respeatkill",		"1",			"Repeat kill map triger. [ 1=On 0=Off ]"
 
 "zr_respeatkill_time",		"5.0",			"Repeat kill time detect"
+
+#No armor all zomnies.
+
+"zr_noarmor_zombie",		"1",			"No armor to zombies. [ 1=On 0=Off ]"
 
 #I accept suggestions and modifications to improve the code, I am new to programming and I want to help and learn more.
 ![alt text](https://i.ibb.co/fSYqhHT/20201113222029-1.jpg)
