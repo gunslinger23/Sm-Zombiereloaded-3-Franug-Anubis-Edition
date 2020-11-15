@@ -34,5 +34,11 @@ Sorry for my English.
 
 "zr_forceteams",		"0",			"Forces teams to switch to Humans at the start of the Match."
 
+#This native will detect infinite loops where the map kills a player.
+
+"zr_respeatkill",		"1",			"Repeat kill map triger."
+
+"zr_respeatkill_time",		"5.0",			"Repeat kill time detect"
+
 #I accept suggestions and modifications to improve the code, I am new to programming and I want to help and learn more.
 ![alt text](https://i.ibb.co/fSYqhHT/20201113222029-1.jpg)
