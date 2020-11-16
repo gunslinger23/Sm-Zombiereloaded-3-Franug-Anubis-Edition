@@ -783,10 +783,20 @@ InfectHumanToZombie(client, attacker = -1, bool:motherinfect = false, bool:respa
 {
 	// Forward pre-event to modules.
 	new Action:result = APIOnClientInfect(client, attacker, motherinfect, respawnoverride, respawn);
+	new Float:playersalone = GetConVarFloat(g_hCvarsList[CVAR_INFECT_NO_ALONE_INFECTION_PLAYERS]);
 	
 	// Check if infection should be blocked.
 	if (result == Plugin_Handled)
 	{
+		return;
+	}
+
+	if(fnGetPlaying() < playersalone)
+	{
+		// Print message to client.
+		TranslationPrintToChat(client, "No alone Infection");
+		// Stop coundown, if running.
+		InfectStopCountdown();
 		return;
 	}
 	
@@ -815,6 +825,8 @@ InfectHumanToZombie(client, attacker = -1, bool:motherinfect = false, bool:respa
 	
 	// Stop coundown, if running.
 	InfectStopCountdown();
+	
+	
 	
 	// If attacker is valid, then continue.
 	if (ZRIsClientValid(attacker))
@@ -874,7 +886,7 @@ InfectHumanToZombie(client, attacker = -1, bool:motherinfect = false, bool:respa
 			ZTeleTeleportClient(client);
 		}
 	}
-	
+
 	// Print message to client.
 	TranslationPrintToChat(client, "Infect infected");
 	
@@ -888,6 +900,23 @@ InfectHumanToZombie(client, attacker = -1, bool:motherinfect = false, bool:respa
 	APIOnClientInfected(client, attacker, motherinfect, respawnoverride, respawn);
 	ImmunityOnClientInfected(client);
 	ClassApplyNoarmorZombie(client);
+}
+
+// Count Players.
+stock fnGetPlaying()
+{
+	new iPlaysNum;
+	iPlaysNum = 0;
+	
+	for(new i=1; i<=MaxClients; i++)
+	{
+		if(IsClientInGame(i) && IsClientConnected(i))
+		{
+			iPlaysNum++;
+		}
+	}
+	
+	return iPlaysNum;
 }
 
 /**

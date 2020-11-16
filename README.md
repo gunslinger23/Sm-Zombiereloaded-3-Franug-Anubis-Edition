@@ -31,8 +31,11 @@
 "zr_respeatkill",		"1",			"Repeat kill map triger. [ 1=On 0=Off ]"
 "zr_respeatkill_time",		"5.0",			"Repeat kill time detect"
 
-### No armor all zomnies.
+### No armor all zombies.
 "zr_noarmor_zombie",		"1",			"No armor to zombies. [ 1=On 0=Off ]"
+
+### No alone infection.
+"zr_no_alone_infection_players"		"2",			"Minimum number of players to start infection.. [ 0 or 1=Off ]"
 
 ### Please remove these plugins if you use them, to test!
 
@@ -42,6 +45,7 @@
 * zr_forceteams.smx
 * zr_repeatkill.smx
 * zspawnfranug.smx
+* zr_no_alone_infection.smx
 
 ### All natives have been implemented, if using with these plugins there may be conflicts! But if you are going to continue using some of the plugins, please disable the native for the plugin in zombiereloaded.
 

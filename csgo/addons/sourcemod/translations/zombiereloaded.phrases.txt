@@ -1340,4 +1340,9 @@
 	{
 		"en" 		"Repeat killer detected. Disabling respawn for this round."
 	}
+	
+	"No alone Infection"
+	{
+		"en" 		"Insufficient number of players to start infection!"
+	}
 }
