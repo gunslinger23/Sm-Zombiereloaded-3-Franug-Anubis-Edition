@@ -153,6 +153,7 @@ enum CvarsList
 	Handle:CVAR_AMBIENTSOUNDS_LENGTH,
 	Handle:CVAR_AMBIENTSOUNDS_VOLUME,
 	Handle:CVAR_ANTISTICK,
+	Handle:CVAR_NOBLOCK,
 	Handle:CVAR_ANTISTICK_DEFAULT_WIDTH,
 	Handle:CVAR_ANTISTICK_FILE_PATH,
 	Handle:CVAR_SPAWNPROTECT,
@@ -474,6 +475,7 @@ CvarsCreate()
 	// Anti-Stick (module)
 	// ===========================
 	g_hCvarsList[CVAR_ANTISTICK]						=	CreateConVar("zr_antistick",			   "1",					"Automatically unstick players when stuck within each others' collision hull.");
+	g_hCvarsList[CVAR_NOBLOCK]						=	CreateConVar("zr_noblock",			   "1",					"Removes player vs. player collisions");
 	
 	// ===========================
 	// Spawn Protect (module)

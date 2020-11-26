@@ -205,6 +205,7 @@ public Action:EventPlayerSpawn(Handle:event, const String:name[], bool:dontBroad
 	ZHPOnClientSpawn(index);
 	VolOnPlayerSpawn(index);
 	ImmunityClientSpawn(index);
+	OnSpawnAntiStickNoblock(index);
 	
 	// Fire post player_spawn event.
 	CreateTimer(0.1, EventPlayerSpawnPost, index);

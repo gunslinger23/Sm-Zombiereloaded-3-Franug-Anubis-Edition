@@ -172,6 +172,7 @@ public OnPluginStart()
 	CommandsInit();
 	WeaponsInit();
 	EventInit();
+	AntiStickNoblock();
 }
 
 /**

@@ -63,7 +63,8 @@
  * Stores "StartTouch" HookID's for each client.
  */
 new g_iStartTouchHookID[MAXPLAYERS + 1] = {-1, ...};
-
+bool g_isHooked;
+int g_offsCollisionGroup;
 /**
  * List of components that make up the model's rectangular boundaries.
  * 
@@ -85,6 +86,36 @@ enum AntiStickBoxBound
 	BoxBound_BDR,
 	BoxBound_BDL,
 }
+
+AntiStickNoblock()
+{
+	g_offsCollisionGroup = FindSendPropInfo("CBaseEntity", "m_CollisionGroup");
+	if (g_offsCollisionGroup == -1)
+	{
+		g_isHooked = false;
+		PrintToServer("* FATAL ERROR: Failed to get offset for CBaseEntity::m_CollisionGroup");
+	}
+	else
+	{
+		g_isHooked = true;
+	}
+}
+
+OnSpawnAntiStickNoblock(client)
+{
+	new bool:noblock_enable = GetConVarBool(g_hCvarsList[CVAR_NOBLOCK]);
+
+	if(!noblock_enable)
+		return;
+	if(!g_isHooked)
+		return;
+	if(noblock_enable && g_isHooked)
+	{
+		SetEntData(client, g_offsCollisionGroup, 2, 4, true);
+	}
+	return;
+}
+
 /**
  * Create commands related to antistick here.
  */
