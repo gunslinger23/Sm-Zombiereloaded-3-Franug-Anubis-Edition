@@ -4,6 +4,9 @@
 * Test & Compile, SouceMod 1.10.0-6490
 * Sorry for my English.
 
+* Author Greyscale | Richard Helgeby and Franc1sco franug, Anubis Edition
+* Version = 3.4.1-A Anubis edition
+
 ### Natives implemented:
 
 ### AutoZspawn- Automatic Spawn after Countdown ends.
@@ -37,6 +40,9 @@
 ### No alone infection.
 "zr_no_alone_infection_players"		"2",			"Minimum number of players to start infection.. [ 0 or 1=Off ]"
 
+### No player vs player collisions.
+"zr_noblock"		"1",			"Removes player vs. player collisions.. [ 0=Off 1=On ]"
+
 ### Please remove these plugins if you use them, to test!
 
 * autozspawn.smx
@@ -46,6 +52,7 @@
 * zr_repeatkill.smx
 * zspawnfranug.smx
 * zr_no_alone_infection.smx
+* noblock.smx
 
 ### All natives have been implemented, if using with these plugins there may be conflicts! But if you are going to continue using some of the plugins, please disable the native for the plugin in zombiereloaded.
 
