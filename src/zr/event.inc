@@ -144,19 +144,22 @@ public Action:EventRoundEnd(Handle:event, const String:name[], bool:dontBroadcas
 {
 	// Get all required event info.
 	new winner = GetEventInt(event, "winner");
-	
+
+	CreateTimer(0.5, EventRoundEndTime, winner, TIMER_FLAG_NO_MAPCHANGE);
+}
+
+public Action:EventRoundEndTime(Handle:hTimer, winner)
+{
 	// Forward event to modules.
 	WeaponsOnRoundEnd();
 	RoundEndOnRoundEnd(winner);
-	//InfectOnRoundEnd();
+	InfectOnRoundEnd();
 	SEffectsOnRoundEnd();
 	RespawnOnRoundEnd();
 	ZSpawnOnRoundEnd();
 	VolOnRoundEnd();
 	ImmunityOnRoundEnd();
-	CreateTimer(1.0, InfectOnRoundEnd, _, TIMER_FLAG_NO_MAPCHANGE);
 }
-
 /**
  * Event callback (player_team)
  * Client is joining a team.
