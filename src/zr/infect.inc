@@ -758,6 +758,9 @@ CountDown()
  */
 InfectStopCountdown()
 {
+	
+	ServerCommand("mp_ignore_round_win_conditions 0");
+	
 	// Kill the timer.
 	ZREndTimer(tInfectCountdown);
 	
