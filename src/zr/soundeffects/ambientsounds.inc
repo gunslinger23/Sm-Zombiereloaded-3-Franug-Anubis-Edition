@@ -133,7 +133,7 @@ AmbientSoundsOnRoundStart()
 		bAmbientSoundsIsPlaying[x] = false;
 	}
 	// Restart ambient sound for all clients.
-	AmbientSoundsRestart();
+	if (g_bAmbientSounds) AmbientSoundsRestart();
 }
 
 /**
@@ -156,8 +156,10 @@ AmbientSoundsOnRoundEnd()
 AmbientSoundsOnClientSpawnPost(client)
 {
 	// If ambience is disabled, then stop.
-	if (!g_bAmbientSounds)
+	new bool:ambience = GetConVarBool(g_hCvarsList[CVAR_AMBIENTSOUNDS]);
+	if (!ambience)
 	{
+		g_bAmbientSounds = false;
 		return;
 	}
 	
@@ -193,8 +195,10 @@ AmbientSoundsRestart()
 	}
 	
 	// If ambience is disabled, then stop.
-	if (!g_bAmbientSounds)
+	new bool:ambience = GetConVarBool(g_hCvarsList[CVAR_AMBIENTSOUNDS]);
+	if (!ambience)
 	{
+		g_bAmbientSounds = false;
 		return;
 	}
 	
@@ -213,8 +217,10 @@ AmbientSoundsRestart()
 public Action:AmbientSoundsTimer(Handle:timer)
 {
 	// If ambience is disabled, then stop.
-	if (!g_bAmbientSounds)
+	new bool:ambience = GetConVarBool(g_hCvarsList[CVAR_AMBIENTSOUNDS]);
+	if (!ambience)
 	{
+		g_bAmbientSounds = false;
 		return;
 	}
 	
