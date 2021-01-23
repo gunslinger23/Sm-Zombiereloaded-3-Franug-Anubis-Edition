@@ -214,6 +214,7 @@ public OnMapStart()
 	ClassOnMapStart();
 	OverlaysOnMapStart();
 	RoundEndOnMapStart();
+	RoundEndSoundsSoundOnMapStart();
 	SEffectsOnMapStart();
 	ZSpawnOnMapStart();
 	VolInit();

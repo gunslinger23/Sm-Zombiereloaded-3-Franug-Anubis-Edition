@@ -156,7 +156,7 @@ ZombieSoundsOnClientDeath(client)
 	decl String:sound[SOUND_MAX_PATH];
 	ZombieSoundsGetRandomSound(sound, Death);
 	
-	ZrsoundsEmitSoundFromClient(client, sound);
+	SEffectsEmitSoundFromClient(client, sound);
 }
 
 /**
@@ -186,7 +186,7 @@ ZombieSoundsOnClientHurt(client)
 		decl String:sound[SOUND_MAX_PATH];
 		ZombieSoundsGetRandomSound(sound, Groan);
 		
-		ZrsoundsEmitSoundFromClient(client, sound);
+		SEffectsEmitSoundFromClient(client, sound);
 	}
 }
 
@@ -337,7 +337,7 @@ ZombieSoundsMoan(client)
 	ZombieSoundsGetRandomSound(sound, Moan);
 	
 	// Emit sound from client.
-	ZrsoundsEmitSoundFromClient(client, sound);
+	SEffectsEmitSoundFromClient(client, sound);
 }
 
 /**
@@ -354,7 +354,7 @@ ZombieSoundsScream(client)
 	if (sound[0])
 	{
 		// Emit infect sound from infected client.
-		ZrsoundsEmitSoundFromClient(client, sound);
+		SEffectsEmitSoundFromClient(client, sound);
 	}
 }
 

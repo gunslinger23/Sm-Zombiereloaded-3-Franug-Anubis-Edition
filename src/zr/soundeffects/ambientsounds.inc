@@ -108,7 +108,18 @@ bool:AmbientSoundsValidateConfig()
 	
 	// Add sound file to downloads table.
 	AddFileToDownloadsTable(sound);
-	
+
+	//Precache Sound
+	ReplaceString(sound, sizeof(sound), "sound/", "");
+	if (g_Game == Game_CSGO)
+	{
+		PrecacheSoundAny(sound, true);
+	}
+	else
+	{
+		PrecacheSound(sound, true);
+	}
+
 	g_bAmbientSounds = true;
 	return true;
 }
@@ -156,10 +167,8 @@ AmbientSoundsOnRoundEnd()
 AmbientSoundsOnClientSpawnPost(client)
 {
 	// If ambience is disabled, then stop.
-	new bool:ambience = GetConVarBool(g_hCvarsList[CVAR_AMBIENTSOUNDS]);
-	if (!ambience)
+	if (!g_bAmbientSounds)
 	{
-		g_bAmbientSounds = false;
 		return;
 	}
 	
@@ -195,10 +204,8 @@ AmbientSoundsRestart()
 	}
 	
 	// If ambience is disabled, then stop.
-	new bool:ambience = GetConVarBool(g_hCvarsList[CVAR_AMBIENTSOUNDS]);
-	if (!ambience)
+	if (!g_bAmbientSounds)
 	{
-		g_bAmbientSounds = false;
 		return;
 	}
 	
@@ -217,10 +224,8 @@ AmbientSoundsRestart()
 public Action:AmbientSoundsTimer(Handle:timer)
 {
 	// If ambience is disabled, then stop.
-	new bool:ambience = GetConVarBool(g_hCvarsList[CVAR_AMBIENTSOUNDS]);
-	if (!ambience)
+	if (!g_bAmbientSounds)
 	{
-		g_bAmbientSounds = false;
 		return;
 	}
 	

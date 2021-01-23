@@ -106,6 +106,67 @@ bool:RoundEndSoundsGetRandomSound(String:soundre[], RoundEndSounds:soundtype)
 	return true;
 }
 
+RoundEndSoundsSoundOnMapStart()
+{
+	int countCT = 1;
+	int countTR = 1;
+	char roundendCTdir[PLATFORM_MAX_PATH];
+	char roundendTRdir[PLATFORM_MAX_PATH];
+
+	if (g_Game != Game_CSGO)
+	{
+		Format(roundendCTdir, sizeof(roundendCTdir), "sound/roundend/humanswin/humans_win%i.wav", countCT);
+		Format(roundendTRdir, sizeof(roundendTRdir), "sound/roundend/zombiewin/zombie_win%i.wav", countTR);
+	}
+	else 
+	{
+		Format(roundendCTdir, sizeof(roundendCTdir), "sound/roundend/humanswin/humans_win%i.mp3", countCT);
+		Format(roundendTRdir, sizeof(roundendTRdir), "sound/roundend/zombiewin/zombie_win%i.mp3", countTR);
+	}
+
+	while(FileExists(roundendCTdir))
+	{
+		AddFileToDownloadsTable(roundendCTdir);
+		ReplaceString(roundendCTdir, sizeof(roundendCTdir), "sound/", "");
+		
+		if(g_Game != Game_CSGO)
+		{
+			// Precache sound before playing.// Emit sound from client.
+			PrecacheSound(roundendCTdir);
+			Format(roundendCTdir, sizeof(roundendCTdir), "sound/roundend/humanswin/humans_win%i.wav", countCT);
+		}
+		else
+		{
+			// Precache sound before playing.// Emit sound from client.
+			PrecacheSoundAny(roundendCTdir);
+			Format(roundendCTdir, sizeof(roundendCTdir), "sound/roundend/humanswin/humans_win%i.mp3", countCT);
+		}
+
+		countCT++;
+	}
+
+	while(FileExists(roundendTRdir))
+	{
+		AddFileToDownloadsTable(roundendTRdir);
+		ReplaceString(roundendTRdir, sizeof(roundendTRdir), "sound/", "");
+		
+		if(g_Game != Game_CSGO)
+		{
+			// Precache sound before playing.// Emit sound from client.
+			PrecacheSound(roundendTRdir);
+			Format(roundendTRdir, sizeof(roundendTRdir), "sound/roundend/zombiewin/zombie_win%i.wav", countTR);
+		}
+		else
+		{
+			// Precache sound before playing.// Emit sound from client.
+			PrecacheSoundAny(roundendTRdir);
+			Format(roundendTRdir, sizeof(roundendTRdir), "sound/roundend/zombiewin/zombie_win%i.mp3", countTR);
+		}
+
+		countTR++;
+	}
+}
+
 RoundEndSoundsSoundFromClient(x, const String:soundre[], Float:level)
 {
 
@@ -114,20 +175,13 @@ RoundEndSoundsSoundFromClient(x, const String:soundre[], Float:level)
 		
 		if (g_Game == Game_CSGO)
 		{
-			// Precache sound before playing.// Emit sound from client.
-			PrecacheSoundAny(soundre);
 			// Emit sound from client.
-			EmitSoundToClientAny(x, soundre,SOUND_FROM_PLAYER, SNDCHAN_AUTO, _, _, level);
+			EmitSoundToClientAny(x, soundre, SOUND_FROM_PLAYER, SNDCHAN_AUTO, SNDLEVEL_GUNFIRE, _, level);
 		}
 		else
 		{
-			// Precache sound before playing.// Emit sound from client.
-			PrecacheSound(soundre);
 			// Emit sound from client.
-			EmitSoundToClient(x, soundre,SOUND_FROM_PLAYER, SNDCHAN_AUTO, _, _, level);
+			EmitSoundToClient(x, soundre, SOUND_FROM_PLAYER, SNDCHAN_AUTO, SNDLEVEL_GUNFIRE, _, level);
 		}
-	}
-	else
-	{
 	}
 }

@@ -25,6 +25,8 @@
  * ============================================================================
  */
 
+#define SOUND_PATH "npc/zombie" // %d is sound file index
+#define SOUND_PATH_CSGO "zr" // %d is sound file index
 /**
  * @section Explosion flags.
  */
@@ -108,6 +110,9 @@ InfectLoad()
 {
 	// Get infection sound.
 	decl String:sound[PLATFORM_MAX_PATH];
+	decl String:soundcache[PLATFORM_MAX_PATH];
+	decl String:soundpath[PLATFORM_MAX_PATH];
+
 	GetConVarString(g_hCvarsList[CVAR_INFECT_SOUND], sound, sizeof(sound));
 	
 	// If infect sound cvar is empty, then stop.
@@ -115,12 +120,47 @@ InfectLoad()
 	{
 		return;
 	}
-	
+
+	// Get infection sound.
+	if (g_Game != Game_CSGO)
+	{
+		strcopy(soundcache, sizeof(soundcache), SOUND_PATH);
+	}
+	else 
+	{
+		strcopy(soundcache, sizeof(soundcache), SOUND_PATH_CSGO);
+	}
+
 	// Prepend sound/ to the path.
-	Format(sound, sizeof(sound), "sound/%s", sound);
-	
-	// Add sound file to downloads table.
-	AddFileToDownloadsTable(sound);
+	Format(soundpath, sizeof(soundpath), "sound/%s", soundcache);
+
+	decl String:sZombieSoundsFile[64], String:PreCachePath[512], String:DownloadPath[PLATFORM_MAX_PATH];
+	new FileType:isZombieSoundsFileType, Handle:h_ZombieSoundsDir = OpenDirectory(soundpath);
+
+	while(ReadDirEntry(h_ZombieSoundsDir, sZombieSoundsFile, sizeof(sZombieSoundsFile), isZombieSoundsFileType))     
+	{
+		if(isZombieSoundsFileType == FileType_File)
+		{
+			Format(PreCachePath, sizeof(PreCachePath), "%s/%s", soundcache, sZombieSoundsFile);
+			Format(DownloadPath, sizeof(DownloadPath), "%s/%s", soundpath, sZombieSoundsFile);
+
+			// Add sound file to downloads table.
+			AddFileToDownloadsTable(DownloadPath);
+
+			if(g_Game != Game_CSGO)
+			{
+				//Precache Sound
+				PrecacheSound(PreCachePath);
+			}
+			else
+			{
+				//Precache Sound
+				PrecacheSoundAny(PreCachePath);
+			}
+		}
+	}
+
+	CloseHandle(h_ZombieSoundsDir);
 }
 
 /**
@@ -723,33 +763,45 @@ CountDown()
 {
 	int count = 1;
 	int countf = 1;
-	char sounddir[128];
-	char soundfemaledir[128];
-	Format(sounddir, 128, "sound/zr/countdown/%i.mp3", count);
-	Format(soundfemaledir, 128, "sound/zr/countdown/female/%i.mp3", countf);
+	char sounddir[PLATFORM_MAX_PATH];
+	char soundfemaledir[PLATFORM_MAX_PATH];
+	Format(sounddir, sizeof(sounddir), "sound/zr/countdown/%i.mp3", count);
+	Format(soundfemaledir, sizeof(soundfemaledir), "sound/zr/countdown/female/%i.mp3", countf);
 	
-	while(FileExists(sounddir) && FileExists(soundfemaledir))
+	while(FileExists(sounddir))
 	{
 		AddFileToDownloadsTable(sounddir);
-		AddFileToDownloadsTable(soundfemaledir);
-		ReplaceString(sounddir, 128, "sound/", "");
-		ReplaceString(soundfemaledir, 128, "sound/", "");
+		ReplaceString(sounddir, sizeof(sounddir), "sound/", "");
 		
 		if(g_Game != Game_CSGO)
 		{
 			PrecacheSound(sounddir);
-			PrecacheSound(soundfemaledir);
 		}
 		else
 		{
 			PrecacheSoundAny(sounddir);
-			PrecacheSoundAny(soundfemaledir);
 		}
 		
 		count++;
+		Format(sounddir, sizeof(sounddir), "sound/zr/countdown/%i.mp3", count);
+	}
+
+	while(FileExists(soundfemaledir))
+	{
+		AddFileToDownloadsTable(soundfemaledir);
+		ReplaceString(soundfemaledir, sizeof(soundfemaledir), "sound/", "");
+		
+		if(g_Game != Game_CSGO)
+		{
+			PrecacheSound(soundfemaledir);
+		}
+		else
+		{
+			PrecacheSoundAny(soundfemaledir);
+		}
+
 		countf++;
-		Format(sounddir, 128, "sound/zr/countdown/%i.mp3", count);
-		Format(soundfemaledir, 128, "sound/zr/countdown/female/%i.mp3", countf);
+		Format(soundfemaledir, sizeof(soundfemaledir), "sound/zr/countdown/female/%i.mp3", countf);
 	}
 }
 
