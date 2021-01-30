@@ -154,6 +154,7 @@ AmbientSoundsOnRoundEnd()
 	if (tAmbientSounds != INVALID_HANDLE)
 	{
 		KillTimer(tAmbientSounds);
+		tAmbientSounds = INVALID_HANDLE;
 	}
 
 	// If ambience is disabled, then stop.
@@ -205,6 +206,7 @@ AmbientSoundsRestart()
 	if (tAmbientSounds != INVALID_HANDLE)
 	{
 		KillTimer(tAmbientSounds);
+		tAmbientSounds = INVALID_HANDLE;
 	}
 	
 	// If ambience is disabled, then stop.
