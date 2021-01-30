@@ -111,7 +111,7 @@ SEffectsOnClientSpawn(client)
 SEffectsOnClientSpawnPost(client)
 {
 	// Forward event to sub-modules.
-	AmbientSoundsOnClientSpawnPost(client);
+	CreateTimer(1.0, AmbientSoundsOnClientSpawnPost, client);
 }
 
 /**
@@ -170,40 +170,28 @@ SEffectsEmitAmbientSound(const String:sound[], Float:ambientvolume = 1.0, client
 {
 	if (ZRIsClientValid(client))
 	{
-		if (g_Game == Game_CSGO)
-		{
-			// Emit ambient sound.
-			EmitSoundToClientAny(client, sound, _, SNDCHAN_AUTO, _, _, ambientvolume);
-		}
-		else
+		if (IsClientInGame(client) && !IsFakeClient(client) && !bAmbientSoundsIsPlaying[client])
 		{
 			// Emit ambient sound.
 			EmitSoundToClient(client, sound, _, SNDCHAN_AUTO, _, _, ambientvolume);
+
+			// Flag client that sound is playing.
+			bAmbientSoundsIsPlaying[client] = true;
 		}
-		
-		// Flag client that sound is playing.
-		bAmbientSoundsIsPlaying[client] = true;
 	}
 	else
 	{
 		for (new x = 1; x <= MaxClients; x++)
 		{
 			// If client isn't in-game, then stop.
-			if (!IsClientInGame(x))
-			{
-				continue;
-			}
-			if (g_Game == Game_CSGO)
-			{
-				// Emit ambient sound.
-				EmitSoundToClientAny(x, sound, _, SNDCHAN_AUTO, _, _, ambientvolume);
-			}
-			else
+			if (IsClientInGame(x) && !IsFakeClient(x) && !bAmbientSoundsIsPlaying[x])
 			{
 				// Emit ambient sound.
 				EmitSoundToClient(x, sound, _, SNDCHAN_AUTO, _, _, ambientvolume);
-			}
 
+				// Flag client that sound is playing.
+				bAmbientSoundsIsPlaying[x] = true;
+			}
 		}
 	}
 }
@@ -219,20 +207,11 @@ SEffectsStopAmbientSound(const String:sound[])
 	for (new x = 1; x <= MaxClients; x++)
 	{
 		// If client isn't in-game, then stop.
-		if (!IsClientInGame(x))
-		{
-			continue;
-		}
-		
-		if (g_Game == Game_CSGO)
-		{
-			// Stop ambient sound.
-			StopSoundAny(x, SNDCHAN_AUTO, sound);
-		}
-		else
+		if (IsClientInGame(x) && !IsFakeClient(x))
 		{
 			// Stop ambient sound.
 			StopSound(x, SNDCHAN_AUTO, sound);
+			bAmbientSoundsIsPlaying[x] = false;
 		}
 	}
 }
@@ -266,16 +245,8 @@ SEffectsEmitSoundFromClient(client, const String:sound[])
 			{
 				return;
 			}
-			if (g_Game == Game_CSGO)
-			{
-				// Emit sound from client.
-				EmitSoundToClientAny(i, sound, client, SNDCHAN_AUTO, _, _, level); // Som Zumbi
-			}
-			else
-			{
-				// Emit sound from client.
-				EmitSoundToClient(i, sound, client, SNDCHAN_AUTO, _, _, level); // Som Zumbi
-			}
+			// Emit sound from client.
+			EmitSoundToClient(i, sound, client, SNDCHAN_AUTO, _, _, level); // Sound Zumbie
 		}
 	}
 }

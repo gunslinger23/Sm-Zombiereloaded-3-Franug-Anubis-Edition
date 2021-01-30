@@ -111,14 +111,8 @@ bool:AmbientSoundsValidateConfig()
 
 	//Precache Sound
 	ReplaceString(sound, sizeof(sound), "sound/", "");
-	if (g_Game == Game_CSGO)
-	{
-		PrecacheSoundAny(sound, true);
-	}
-	else
-	{
-		PrecacheSound(sound, true);
-	}
+	//Precache Sound
+	PrecacheSound(sound);
 
 	g_bAmbientSounds = true;
 	return true;
@@ -152,11 +146,24 @@ AmbientSoundsOnRoundStart()
  */
 AmbientSoundsOnRoundEnd()
 {
-	// x = client index
-	for (new x = 1; x <= MaxClients; x++)
+	// Get ambient sound file.
+	decl String:sound[SOUND_MAX_PATH];
+	GetConVarString(g_hCvarsList[CVAR_AMBIENTSOUNDS_FILE], sound, sizeof(sound));
+
+	// If timer is running, kill it.
+	if (tAmbientSounds != INVALID_HANDLE)
 	{
-		bAmbientSoundsIsPlaying[x] = false;
+		KillTimer(tAmbientSounds);
 	}
+
+	// If ambience is disabled, then stop.
+	if (!g_bAmbientSounds)
+	{
+		return;
+	}
+
+	// Stop sound before playing again.
+	SEffectsStopAmbientSound(sound);
 }
 
 /**
@@ -164,32 +171,29 @@ AmbientSoundsOnRoundEnd()
  * 
  * @param client	The client index.
  */
-AmbientSoundsOnClientSpawnPost(client)
+public Action:AmbientSoundsOnClientSpawnPost(Handle:abstime, any:client)
 {
 	// If ambience is disabled, then stop.
 	if (!g_bAmbientSounds)
 	{
 		return;
 	}
-	
+
 	// If flag is enabled, then stop.
-	if (bAmbientSoundsIsPlaying[client])
+	if (!IsClientInGame(client) || IsFakeClient(client) || bAmbientSoundsIsPlaying[client])
 	{
 		return;
 	}
-	
+
 	// Get ambient sound file.
 	decl String:sound[SOUND_MAX_PATH];
 	GetConVarString(g_hCvarsList[CVAR_AMBIENTSOUNDS_FILE], sound, sizeof(sound));
-	
+
 	// Get ambient sound volume.
 	new Float:ambientvolume = GetConVarFloat(g_hCvarsList[CVAR_AMBIENTSOUNDS_VOLUME]);
-	
+
 	// Emit ambient sound.
 	SEffectsEmitAmbientSound(sound, ambientvolume, client);
-	
-	// Flag client that sound is playing.
-	bAmbientSoundsIsPlaying[client] = true;
 }
 
 /**

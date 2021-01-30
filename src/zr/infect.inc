@@ -147,16 +147,8 @@ InfectLoad()
 			// Add sound file to downloads table.
 			AddFileToDownloadsTable(DownloadPath);
 
-			if(g_Game != Game_CSGO)
-			{
-				//Precache Sound
-				PrecacheSound(PreCachePath);
-			}
-			else
-			{
-				//Precache Sound
-				PrecacheSoundAny(PreCachePath);
-			}
+			//Precache Sound
+			PrecacheSound(PreCachePath);
 		}
 	}
 
@@ -729,15 +721,13 @@ public Action:InfectCountdown(Handle:timer)
 				{
 					ReplaceString(sounddir, 128, "sound/", "");
 
-					if(g_Game == Game_CSGO) EmitSoundToClientAny(i, sounddir, _, _, _, _, selectedVolume);
-					else EmitSoundToClient(i, sounddir, _, _, _, _, selectedVolume);
+					EmitSoundToClient(i, sounddir, SOUND_FROM_PLAYER, SNDCHAN_AUTO, _, _, selectedVolume);
 				}
 				if(selectedVoice == 2)
 				{
 					ReplaceString(soundfemaledir, 128, "sound/", "");
 
-					if(g_Game == Game_CSGO) EmitSoundToClientAny(i, soundfemaledir, _, _, _, _, selectedVolume);
-					else EmitSoundToClient(i, soundfemaledir, _, _, _, _, selectedVolume);
+					EmitSoundToClient(i, soundfemaledir, SOUND_FROM_PLAYER, SNDCHAN_AUTO, _, _, selectedVolume);
 				}
 				else
 				{
@@ -772,16 +762,9 @@ CountDown()
 	{
 		AddFileToDownloadsTable(sounddir);
 		ReplaceString(sounddir, sizeof(sounddir), "sound/", "");
-		
-		if(g_Game != Game_CSGO)
-		{
-			PrecacheSound(sounddir);
-		}
-		else
-		{
-			PrecacheSoundAny(sounddir);
-		}
-		
+		// Precache Sound
+		PrecacheSound(sounddir);
+
 		count++;
 		Format(sounddir, sizeof(sounddir), "sound/zr/countdown/%i.mp3", count);
 	}
@@ -790,15 +773,8 @@ CountDown()
 	{
 		AddFileToDownloadsTable(soundfemaledir);
 		ReplaceString(soundfemaledir, sizeof(soundfemaledir), "sound/", "");
-		
-		if(g_Game != Game_CSGO)
-		{
-			PrecacheSound(soundfemaledir);
-		}
-		else
-		{
-			PrecacheSoundAny(soundfemaledir);
-		}
+		//Precache Sound
+		PrecacheSound(soundfemaledir);
 
 		countf++;
 		Format(soundfemaledir, sizeof(soundfemaledir), "sound/zr/countdown/female/%i.mp3", countf);

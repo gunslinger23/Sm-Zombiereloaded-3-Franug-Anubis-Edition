@@ -33,7 +33,6 @@
 #include <sdktools>
 #include <clientprefs>
 #include <cstrike>
-#include <emitsoundany>
 
 #undef REQUIRE_EXTENSIONS
 #include <hitboxchanger>	
