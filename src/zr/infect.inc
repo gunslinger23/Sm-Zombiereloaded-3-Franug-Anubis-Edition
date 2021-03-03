@@ -487,6 +487,7 @@ public Action:InfectMotherZombie(Handle:timer)
 {
 	// Reset timer handle.
 	tInfect = INVALID_HANDLE;
+	ServerCommand("mp_ignore_round_win_conditions 0");
 	
 	// Create eligible player list.
 	new Handle:arrayEligibleClients = INVALID_HANDLE;
@@ -517,7 +518,6 @@ public Action:InfectMotherZombie(Handle:timer)
 	
 	// Get and validate infection mode. This will also log a warning on error.
 	new InfectMode:mode = InfectGetModeOrFail();
-	ServerCommand("mp_ignore_round_win_conditions 0");
 	RoundStartForceteamsInfect();
 	
 	// Apply infection mode.
