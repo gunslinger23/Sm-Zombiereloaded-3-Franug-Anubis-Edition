@@ -212,7 +212,7 @@ new g_hCvarsList[CvarsList];
  */
 new Handle:g_hAutoTeamBalance = INVALID_HANDLE;
 new Handle:g_hLimitTeams = INVALID_HANDLE;
-new Handle:g_hRestartGame = INVALID_HANDLE;
+//new Handle:g_hRestartGame = INVALID_HANDLE;
 // Force teams Bool.
 new bool:started = false;
 /**
@@ -227,7 +227,7 @@ CvarsInit()
 	// Retrieve handles of CS:S cvars.
 	g_hAutoTeamBalance = FindConVar("mp_autoteambalance");
 	g_hLimitTeams = FindConVar("mp_limitteams");
-	g_hRestartGame = FindConVar("mp_restartgame");
+	//g_hRestartGame = FindConVar("mp_restartgame");
 	
 	// Create zombiereloaded cvars.
 	CvarsCreate();
@@ -584,7 +584,7 @@ CvarsHook(bool:unhook = false)
 		// Unhook all cvars.
 		UnhookConVarChange(g_hAutoTeamBalance, CvarsHookLocked);
 		UnhookConVarChange(g_hLimitTeams, CvarsHookLocked);
-		UnhookConVarChange(g_hRestartGame, CvarsHookRestartGame);
+		//UnhookConVarChange(g_hRestartGame, CvarsHookRestartGame);
 		
 		UnhookConVarChange(g_hCvarsList[CVAR_VOL], VolEnabledChanged);
 		
@@ -599,7 +599,7 @@ CvarsHook(bool:unhook = false)
 	// Hook cvar to prevent it from changing.
 	HookConVarChange(g_hAutoTeamBalance, CvarsHookLocked);
 	HookConVarChange(g_hLimitTeams, CvarsHookLocked);
-	HookConVarChange(g_hRestartGame, CvarsHookRestartGame);
+	//HookConVarChange(g_hRestartGame, CvarsHookRestartGame);
 	
 	HookConVarChange(g_hCvarsList[CVAR_VOL], VolEnabledChanged);
 }
@@ -653,7 +653,7 @@ public CvarsHookLocked(Handle:cvar, const String:oldvalue[], const String:newval
  * @param convar	The cvar handle.
  * @param oldvalue  The value before the attempted change.
  * @param newvalue  The new value.
- */
+
 public CvarsHookRestartGame(Handle:cvar, const String:oldvalue[], const String:newvalue[])
 {
 	// Prevent round restart.
@@ -672,3 +672,4 @@ public CvarsHookRestartGame(Handle:cvar, const String:oldvalue[], const String:n
 	// If log flag check fails, then don't log.
 	LogEvent(false, LogType_Normal, LOG_CORE_EVENTS, LogModule_Cvars, "Restart Game", "\"mp_restartgame\" was caught and blocked, commencing round.");
 }
+ */
