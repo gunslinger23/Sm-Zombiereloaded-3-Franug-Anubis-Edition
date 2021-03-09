@@ -199,7 +199,8 @@ enum CvarsList
 	Handle:CVAR_ROUNDEND_SOUNDS,
 	Handle:CVAR_ROUNDEND_SOUNDS_DEFAULT,
 	Handle:CVAR_VOICECOUNT_DEFAULT,
-	Handle:CVAR_VOLUME_DEFAULT
+	Handle:CVAR_VOLUME_DEFAULT,
+	Handle:CVAR_KNOCKBACK_MULTIPLIER
 }
 
 /**
@@ -566,6 +567,7 @@ CvarsCreate()
 	g_hCvarsList[CVAR_VOICECOUNT_DEFAULT]							  =	CreateConVar("zr_voice_count_default",			 "1",	"Default countdown voice. ['1' = Mem  | '2' = Woman!] Default 1");
 	g_hCvarsList[CVAR_VOLUME_DEFAULT]							  =	CreateConVar("zr_volume_default",			 "0.5",	"Default volume Zr Sounds. Default '0.5'");
 	
+	g_hCvarsList[CVAR_KNOCKBACK_MULTIPLIER]	 =	CreateConVar("zr_knockback_multiplier",	"1.0",			"Multiplier for knockback");
 	
 	// Auto-generate config file if it doesn't exist, then execute.
 	AutoExecConfig(true, "zombiereloaded", "sourcemod/zombiereloaded");
