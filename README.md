@@ -43,6 +43,9 @@
 ### No player vs player collisions.
 "zr_noblock"		"1",			"Removes player vs. player collisions.. [ 0=Off 1=On ]"
 
+### Global multiplier for knockback.
+"zr_knockback_multiplier"		"1.0",			"Global multiplier for knockback. Default '1.0'"
+
 ### Please remove these plugins if you use them, to test!
 
 * autozspawn.smx
