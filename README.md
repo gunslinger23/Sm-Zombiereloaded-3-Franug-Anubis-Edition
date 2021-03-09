@@ -57,6 +57,10 @@
 * zr_no_alone_infection.smx
 * noblock.smx
 
+### Warm up in CS:GO
+If you want warm up round work perfectly, Use `optional plugins/ze_warmup.smx`
+It can prevent warm up will not end in some map
+
 ### All natives have been implemented, if using with these plugins there may be conflicts! But if you are going to continue using some of the plugins, please disable the native for the plugin in zombiereloaded.
 
 #I accept suggestions and modifications to improve the code, I am new to programming and I want to help and learn more.
