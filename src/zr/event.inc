@@ -179,7 +179,7 @@ public Action:EventPlayerTeam(Handle:event, const String:name[], bool:dontBroadc
 	ImmunityOnClientTeam(index);
 	ZSpawnAutoZspawn(index);
 	
-	return Plugin_Handled;
+	return Plugin_Continue;
 }
 
 /**
